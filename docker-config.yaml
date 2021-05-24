@@ -1,0 +1,27 @@
+---
+
+kubectl create secret docker-registry my-secret --docker-server=DOCKER_REGISTRY_SERVER --docker-username=DOCKER_USER --docker password=DOCKER_PASSWORD --docker-email=DOCKER_EMAIL
+
+---
+
+kubectl create secret generic regcred \
+    --from-file=.dockerconfigjson=/home/deniz/.docker/config.json \
+    --type=kubernetes.io/dockerconfigjson
+
+---
+
+
+kubectl get secret regcred --output=yaml
+
+---
+cat ~/.dockerconfigjson
+
+cat ~/.docker/config.json
+
+---
+
+kubectl get secret regcred --output="jsonpath={.data.\.dockerconfigjson}" | base64 --decode
+
+---
+
+
