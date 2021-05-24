@@ -1,0 +1,27 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: example
+  namespace: deniz
+spec:
+  hostPath:
+    path: "/mnt/kubernetes/example"
+  capacity:
+    storage: 25Gi
+  accessModes:
+    - ReadWriteOnce
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - deniz-master
+  claimRef:
+    kind: PersistentVolumeClaim
+    apiVersion: v1
+    namespace: deniz
+    name: example-example-0
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
